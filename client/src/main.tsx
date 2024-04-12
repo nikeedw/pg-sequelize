@@ -6,8 +6,8 @@ import AppRouter from './components/AppRouter.tsx';
 import DeviceStore from './store/DeviceStore.ts';
 
 type contextGeneric = {
-	user?: UserStore, 
-	device?: DeviceStore,
+	user: UserStore, 
+	device: DeviceStore,
 } | null;
 
 export const Context = createContext<contextGeneric>(null);
