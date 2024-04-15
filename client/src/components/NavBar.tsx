@@ -12,6 +12,12 @@ const NavBar = observer(() => {
 
 	const navigate = useNavigate();
 
+	const logout = () => {
+		user.setUser({});
+		user.setIsAuth(false);
+		navigate(RoutesEnum.LOGIN_ROUTE)
+	}
+
 	return (
 		<Navbar bg="dark" data-bs-theme="dark">
 			<Container>
@@ -26,11 +32,11 @@ const NavBar = observer(() => {
 				{isAuth ?
 					<Nav style={{ marginLeft: 'auto', color: 'white', gap: 5 }}>
 						<Button variant="outline-light" onClick={() => navigate(RoutesEnum.ADMIN_ROUTE)}>Админ панель</Button>
-						<Button variant="outline-light" onClick={() => navigate(RoutesEnum.LOGIN_ROUTE)}>Выйти</Button>
+						<Button variant="outline-light" onClick={() => logout()}>Выйти</Button>
 					</Nav>
 					:
 					<Nav style={{ marginLeft: 'auto', color: 'white', gap: 5 }}>
-						<Button variant="outline-light" onClick={() => user?.setIsAuth(true)}>Авторизация</Button>
+						<Button variant="outline-light" onClick={() => navigate(RoutesEnum.LOGIN_ROUTE)}>Авторизация</Button>
 					</Nav>
 				}
 			</Container>

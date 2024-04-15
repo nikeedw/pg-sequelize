@@ -6,54 +6,54 @@ export default class DeviceStore {
 	private devices: IDevice[];
 	private selectedType: IBrand;
 	private selectedBrand: IType;
+	private page: number;
+	private totalCount: number;
+	private limit: number;
 
 	constructor() {
-		this.types = [
-			{id: 1, name: 'Холодильники'},
-			{id: 2, name: 'Смартфоны'},
-			{id: 3, name: 'Ноутбуки'},
-			{id: 4, name: 'Телевизоры'},
-		]
-		this.brands = [
-			{id: 1, name: 'Samsung'},
-			{id: 2, name: 'Apple'},
-			{id: 3, name: 'Lenovo'},
-			{id: 4, name: 'Asus'},
-		]
-		this.devices = [
-			{id: 1, name: 'Iphone 12 pro', price: 20000, rating: 5, img: 'https://yt3.ggpht.com/a/AGF-l78zTJeYADnfkU5LyoOW9iLuTQIjOuiRuxB5nQ=s900-c-k-c0xffffffff-no-rj-mo'},
-			{id: 2, name: 'Iphone 12 pro', price: 20000, rating: 5, img: 'https://yt3.ggpht.com/a/AGF-l78zTJeYADnfkU5LyoOW9iLuTQIjOuiRuxB5nQ=s900-c-k-c0xffffffff-no-rj-mo'},
-			{id: 3, name: 'Iphone 12 pro', price: 20000, rating: 5, img: 'https://yt3.ggpht.com/a/AGF-l78zTJeYADnfkU5LyoOW9iLuTQIjOuiRuxB5nQ=s900-c-k-c0xffffffff-no-rj-mo'},
-			{id: 4, name: 'Iphone 12 pro', price: 20000, rating: 5, img: 'https://yt3.ggpht.com/a/AGF-l78zTJeYADnfkU5LyoOW9iLuTQIjOuiRuxB5nQ=s900-c-k-c0xffffffff-no-rj-mo'},
-			{id: 5, name: 'Iphone 12 pro', price: 20000, rating: 5, img: 'https://yt3.ggpht.com/a/AGF-l78zTJeYADnfkU5LyoOW9iLuTQIjOuiRuxB5nQ=s900-c-k-c0xffffffff-no-rj-mo'},
-			{id: 6, name: 'Iphone 12 pro', price: 20000, rating: 5, img: 'https://yt3.ggpht.com/a/AGF-l78zTJeYADnfkU5LyoOW9iLuTQIjOuiRuxB5nQ=s900-c-k-c0xffffffff-no-rj-mo'},
-			{id: 7, name: 'Iphone 12 pro', price: 20000, rating: 5, img: 'https://yt3.ggpht.com/a/AGF-l78zTJeYADnfkU5LyoOW9iLuTQIjOuiRuxB5nQ=s900-c-k-c0xffffffff-no-rj-mo'},
-			{id: 8, name: 'Iphone 12 pro', price: 20000, rating: 5, img: 'https://yt3.ggpht.com/a/AGF-l78zTJeYADnfkU5LyoOW9iLuTQIjOuiRuxB5nQ=s900-c-k-c0xffffffff-no-rj-mo'},
-			{id: 9, name: 'Iphone 12 pro', price: 20000, rating: 5, img: 'https://yt3.ggpht.com/a/AGF-l78zTJeYADnfkU5LyoOW9iLuTQIjOuiRuxB5nQ=s900-c-k-c0xffffffff-no-rj-mo'},
-		]
-		this.selectedType = {id: 0, name: ''};
-		this.selectedBrand = {id: 0, name: ''};
+		this.types = []
+		this.brands = []
+		this.devices = []
+		this.selectedType = {id: '', name: ''};
+		this.selectedBrand = {id: '', name: ''};
+		this.page = 1
+		this.totalCount = 0
+		this.limit = 3
 		makeAutoObservable(this);
 	}
 
-	setTypes(types: any): void {
+	setTypes(types: IType[]): void {
 		this.types = types;
 	}
 
-	setBrands(brands: any): void {
+	setBrands(brands: IBrand[]): void {
 		this.brands = brands;
 	}
 
-	setDevices(devices: any): void {
+	setDevices(devices: IDevice[]): void {
 		this.devices = devices;
 	}
 
-	setSelectedType(type: any): void {
+	setSelectedType(type: IType): void {
+		this.setPage(1);
 		this.selectedType = type;
 	}
 
-	setSelectedBrand(brand: any): void {
+	setSelectedBrand(brand: IBrand): void {
+		this.setPage(1);
 		this.selectedBrand = brand;
+	}
+
+	setPage(page: number): void {
+		this.page = page;
+	}
+
+	setLimit(limit: number): void {
+		this.limit = limit;
+	}
+
+	setTotalCount(totalCount: number): void {
+		this.totalCount = totalCount;
 	}
 
 	get getTypes() {
@@ -74,5 +74,17 @@ export default class DeviceStore {
 
 	get getSelectedBrand() {
 		return this.selectedBrand;
+	}
+
+	get getPage() {
+		return this.page;
+	}
+
+	get getLimit() {
+		return this.limit;
+	}
+
+	get getTotalCount() {
+		return this.totalCount;
 	}
 }
