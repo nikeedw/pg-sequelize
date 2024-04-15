@@ -1,12 +1,28 @@
 import { Navigate, RouterProvider, createBrowserRouter } from "react-router-dom";
 import { authRoutes, publicRoutes } from "../routes/routes";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Context } from "../main";
+import { check } from "../http/userAPI";
+import { Spinner } from "react-bootstrap";
+import { observer } from "mobx-react-lite";
 
-const AppRouter = () => {
+const AppRouter = observer(() => {
 	const context = useContext(Context)
-	const user = context?.user;
-	const isAuth = user?.getIsAuth;
+	const user = context!.user;
+	const isAuth = user!.getIsAuth;
+
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		check().then( (_) => {
+			user.setUser(true)
+			user.setIsAuth(true);
+		}).finally(() => setLoading(false));
+	}, [])
+
+	if(loading) {
+		return <Spinner animation="grow" />
+	}
 
 	const routes = [
 		...(isAuth ? authRoutes : []).map(route => ({
@@ -31,6 +47,6 @@ const AppRouter = () => {
 	return (
 		<RouterProvider router={router} />
 	)
-}
+})
 
 export default AppRouter

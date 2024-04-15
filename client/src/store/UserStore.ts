@@ -1,3 +1,4 @@
+import { JwtPayload } from "jwt-decode";
 import { makeAutoObservable } from "mobx";
 
 export default class UserStore {
@@ -5,7 +6,7 @@ export default class UserStore {
 	private user;
 
 	constructor() {
-		this.isAuth = true;
+		this.isAuth = false;
 		this.user = {};
 		makeAutoObservable(this);
 	}
@@ -14,7 +15,7 @@ export default class UserStore {
 		this.isAuth = bool;
 	}
 
-	setUser(user: any): void {
+	setUser(user: IUser | JwtPayload): void {
 		this.user = user;
 	}
 
